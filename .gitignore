@@ -109,3 +109,4 @@ pip-selfcheck.json
 
 # Configs
 config.py
+client_secret.p12
