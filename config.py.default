@@ -1,0 +1,5 @@
+# config file
+
+key_file_location = ''
+service_account_email = ''
+view_id = ''
