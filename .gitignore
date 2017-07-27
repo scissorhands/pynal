@@ -99,3 +99,9 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# VirtualEnv
+Include/
+Lib/
+Scripts/
+tcl/
