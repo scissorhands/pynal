@@ -40,9 +40,19 @@ class Etl:
 		stats = self.formatted_output(report)
 		print(stats)
 
+	def retrieve_city_stats(self):
+		report = self.req.get_city_stats()
+		stats = self.formatted_output(report)
+		print(stats)
+
+	def retrieve_region_stats(self):
+		report = self.req.get_region_stats()
+		stats = self.formatted_output(report)
+		print(stats)
+
 def main():
 	etl = Etl()
-	etl.retrieve_hostname_stats()
+	etl.retrieve_region_stats()
 
 if __name__ == '__main__':
 	main()
