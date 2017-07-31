@@ -25,8 +25,36 @@ class Connector:
 			print('{0:3} {1:25} {2}'.format(row[0], row[2], row[4]))
 		print()
 
+	def insert_ignore(self, table, data_dictionary):
+		insert_id = None
+		keys = "("+", ".join( "`"+key+"`" for key in data_dictionary.keys() )+")"
+		values = "("+", ".join( "%("+str(value)+")s" for value in data_dictionary.keys() )+")"
+		query = ("INSERT IGNORE INTO {0}\n"
+			"{1}\n"
+			"VALUES {2}".format(table, keys, values) )
+		try:
+			self.cur.execute(query, data_dictionary)
+			self.cnx.commit()
+			insert_id = self.cur.lastrowid
+		except Exception as e:
+			print(e)
+		return insert_id
+
 	def main(self):
-		self.test_select()
+		id = self.insert_ignore('analytics_hostname_stats', {
+			'hostname': 'hostname',
+			'sessions': 1,
+			'page_views': 1,
+			'avg_time_on_page': 2.1,
+			'exits': 3,
+			'organic_searches': 5,
+			'date': '2017-07-31',
+		})
+		print(id)
+		if self.cur:
+			self.cur.close()
+		if self.cnx:
+			self.cnx.close()
 
 
 if __name__ == '__main__':
