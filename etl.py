@@ -50,9 +50,14 @@ class Etl:
 		stats = self.formatted_output(report)
 		print(stats)
 
+	def retrieve_devices_stats(self):
+		report = self.req.get_devices_stats()
+		stats = self.formatted_output(report)
+		print(stats)
+
 def main():
 	etl = Etl()
-	etl.retrieve_region_stats()
+	etl.retrieve_devices_stats()
 
 if __name__ == '__main__':
 	main()

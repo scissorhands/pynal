@@ -51,3 +51,19 @@ class Requester:
 	       		{'name' : 'ga:date'}
 	       	]
 	    )
+
+	def get_devices_stats(self):
+		return service.generic_request(self.analytics,
+			[
+				{'expression': 'ga:sessions'},
+				{'expression': 'ga:pageViews'},
+				{'expression': 'ga:avgTimeOnPage'},
+				{'expression': 'ga:exits'},
+				{'expression': 'ga:organicSearches'}
+	       	],
+	       	[
+	       		{'name' : 'ga:hostname'},
+	       		{'name' : 'ga:deviceCategory'}, 
+	       		{'name' : 'ga:date'}
+	       	]
+	    )
