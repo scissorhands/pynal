@@ -1,4 +1,5 @@
 from requester import Requester
+from dbconnector import Connector
 import json
 import datetime as dt
 
@@ -6,6 +7,7 @@ import datetime as dt
 class Etl:
 	def __init__(self):
 		self.req = Requester()
+		self.connector = Connector()
 
 	def get_report_dictionary(self, report):
 		columnHeader = report.get('columnHeader', {})
@@ -35,29 +37,50 @@ class Etl:
 				stats.append(stat) 
 		return stats
 
-	def retrieve_hostname_stats(self):
+	def retrieve_all_stats(self, destroy_after=True):
+		self.retrieve_hostname_stats(False)
+		self.retrieve_city_stats(False)
+		self.retrieve_region_stats(False)
+		self.retrieve_devices_stats(False)
+		if (destroy_after):
+			self.connector.serv_destory()
+
+
+	def retrieve_hostname_stats(self, destroy_after=True):
 		report = self.req.get_hostname_stats()
 		stats = self.formatted_output(report)
-		print(stats)
+		for row in stats:
+			self.connector.insert_ignore("analytics_hostname_stats",row)
+		if (destroy_after):
+			self.connector.serv_destory()
 
-	def retrieve_city_stats(self):
+	def retrieve_city_stats(self, destroy_after=True):
 		report = self.req.get_city_stats()
 		stats = self.formatted_output(report)
-		print(stats)
+		for row in stats:
+			self.connector.insert_ignore("analytics_city_stats",row)
+		if (destroy_after):
+			self.connector.serv_destory()
 
-	def retrieve_region_stats(self):
+	def retrieve_region_stats(self, destroy_after=True):
 		report = self.req.get_region_stats()
 		stats = self.formatted_output(report)
-		print(stats)
+		for row in stats:
+			self.connector.insert_ignore("analytics_region_stats",row)
+		if (destroy_after):
+			self.connector.serv_destory()
 
-	def retrieve_devices_stats(self):
+	def retrieve_devices_stats(self, destroy_after=True):
 		report = self.req.get_devices_stats()
 		stats = self.formatted_output(report)
-		print(stats)
+		for row in stats:
+			self.connector.insert_ignore("analytics_device_stats",row)
+		if (destroy_after):
+			self.connector.serv_destory()
 
 def main():
 	etl = Etl()
-	etl.retrieve_devices_stats()
+	etl.retrieve_all_stats()
 
 if __name__ == '__main__':
 	main()

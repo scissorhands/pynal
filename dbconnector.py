@@ -40,6 +40,14 @@ class Connector:
 			print(e)
 		return insert_id
 
+	def serv_destory(self):
+		if self.cur:
+			self.cur.close()
+		if self.cnx:
+			self.cnx.close()
+		print("Connection destroyed")
+
+
 	def main(self):
 		id = self.insert_ignore('analytics_hostname_stats', {
 			'hostname': 'hostname',
@@ -50,7 +58,6 @@ class Connector:
 			'organic_searches': 5,
 			'date': '2017-07-31',
 		})
-		print(id)
 		if self.cur:
 			self.cur.close()
 		if self.cnx:
