@@ -47,7 +47,8 @@ class Etl:
 
 
 	def retrieve_hostname_stats(self, destroy_after=True):
-		report = self.req.get_hostname_stats()
+		print('getting hostname stats')
+		report = self.req.get_hostname_stats( 'yesterday' )
 		stats = self.formatted_output(report)
 		for row in stats:
 			self.connector.insert_ignore("analytics_hostname_stats",row)
@@ -55,7 +56,8 @@ class Etl:
 			self.connector.serv_destory()
 
 	def retrieve_city_stats(self, destroy_after=True):
-		report = self.req.get_city_stats()
+		print('getting city stats')
+		report = self.req.get_city_stats( 'yesterday' )
 		stats = self.formatted_output(report)
 		for row in stats:
 			self.connector.insert_ignore("analytics_city_stats",row)
@@ -63,7 +65,8 @@ class Etl:
 			self.connector.serv_destory()
 
 	def retrieve_region_stats(self, destroy_after=True):
-		report = self.req.get_region_stats()
+		print('getting region stats')
+		report = self.req.get_region_stats( 'yesterday' )
 		stats = self.formatted_output(report)
 		for row in stats:
 			self.connector.insert_ignore("analytics_region_stats",row)
@@ -71,7 +74,8 @@ class Etl:
 			self.connector.serv_destory()
 
 	def retrieve_devices_stats(self, destroy_after=True):
-		report = self.req.get_devices_stats()
+		print('getting devices stats')
+		report = self.req.get_devices_stats( 'yesterday' )
 		stats = self.formatted_output(report)
 		for row in stats:
 			self.connector.insert_ignore("analytics_device_stats",row)
